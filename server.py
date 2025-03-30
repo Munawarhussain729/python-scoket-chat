@@ -16,8 +16,15 @@ print("🟢 Server Started.... Waiting fro users to join.")
 clients = {} #Dictionary to track clients
 shutdown_flag = threading.Event()
 
-def broadcast(message):
-    return
+def broadcast(message, sender_scoket=None):
+    for client in clients.keys():
+        if client != sender_scoket:
+            try:
+                client.send(message.encode())
+            except:
+                client.close()
+                del clients[client]
+    
 
 def handleClient(client):
     try:
@@ -39,8 +46,7 @@ def handleClient(client):
     finally:
         client.close()
         del clients[client]
-        
-    return
+    
 
 #Accept new client and start a separate thread for each one
 def accept_clients():
@@ -50,8 +56,6 @@ def accept_clients():
             threading.Thread(target=handleClient, args=(client, address),daemon=True).start()
         except:
             break
-    
-    return
 
 accept_thread = threading.Thread(target=accept_clients, daemon=True) #Daemon thread
 accept_thread.start()
