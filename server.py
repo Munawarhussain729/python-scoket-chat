@@ -19,7 +19,18 @@ shutdown_flag = threading.Event()
 def broadcast(message):
     return
 
+def handleClient(client):
+    return
+
+#Accept new client and start a separate thread for each one
 def accept_clients():
+    while not shutdown_flag.is_set():
+        try:
+            client,address = server_socket.accept
+            threading.Thread(target=handleClient, args=(client, address),daemon=True).start()
+        except:
+            break
+    
     return
 
 accept_thread = threading.Thread(target=accept_clients, daemon=True) #Daemon thread
