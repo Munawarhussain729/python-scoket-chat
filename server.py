@@ -16,8 +16,23 @@ print("🟢 Server Started.... Waiting fro users to join.")
 clients = {} #Dictionary to track clients
 shutdown_flag = threading.Event()
 
+def broadcast(message):
+    return
+
 def accept_clients():
     return
 
 accept_thread = threading.Thread(target=accept_clients, daemon=True) #Daemon thread
 accept_thread.start()
+
+while True:
+    admin_message = input()
+    if admin_message.lower() == "shutdown":
+        print("🔴 Shutting down server...")
+        shutdown_flag.set()
+        broadcast("🚨 Server is shutting down.")
+        for client in list(clients.keys()):
+            client.close()
+        server_socket.close()
+        break
+    broadcast(f"Sever: {admin_message}")
