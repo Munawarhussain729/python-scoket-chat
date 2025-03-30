@@ -56,6 +56,7 @@ def accept_clients():
             threading.Thread(target=handleClient, args=(client, address),daemon=True).start()
         except:
             break
+    
 
 accept_thread = threading.Thread(target=accept_clients, daemon=True) #Daemon thread
 accept_thread.start()
