@@ -110,3 +110,10 @@ This project contains two programs: one for the **server** and one for the **cli
    client_socket.close()
    ```
 
+## Features
+✅ Multi-user chat system (supports up to 5 users by default)
+✅ Real-time message broadcasting
+✅ Graceful client disconnection
+✅ Server-side shutdown mechanism
+✅ Threaded architecture for concurrent users
+
