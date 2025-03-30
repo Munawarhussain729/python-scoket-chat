@@ -20,6 +20,26 @@ def broadcast(message):
     return
 
 def handleClient(client):
+    try:
+        username = client.recv(BUFFER_SIZE).decode()
+        client[client] = username
+        print(f"🟢 {username} has joined the chat.")
+        broadcast(f"🔔 {username} has joined the chat!", client)
+        
+        while True: 
+            message = client.recv(BUFFER_SIZE).decode()
+            if not message or message.lower() == "exit":
+                print(f"🛑 {username} has left the chat.")
+                broadcast(f"🔔 {username} has left the chat.", client)
+                break
+            print(f"{username}: {message}")
+            broadcast(f"{username}: {message}", client)
+    except ConnectionResetError:
+        print(f"⚠ {clients[client]} disconnected unexpectedly.")
+    finally:
+        client.close()
+        del clients[client]
+        
     return
 
 #Accept new client and start a separate thread for each one
