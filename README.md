@@ -117,3 +117,26 @@ This project contains two programs: one for the **server** and one for the **cli
 ✅ Server-side shutdown mechanism
 ✅ Threaded architecture for concurrent users
 
+## How to Run
+1. **Start the server:**
+   ```sh
+   python server.py
+   ```
+2. **Run the client on multiple terminals or machines:**
+   ```sh
+   python client.py
+   ```
+3. **Type messages and chat with other connected users!**
+4. **To exit as a client**, type `exit`.
+5. **To shut down the server**, type `shutdown` in the server terminal.
+
+## Future Enhancements
+- Implementing an authentication system (user login/logout)
+- Adding support for multiple chat rooms
+- Creating a web-based UI for the chat system
+- Encrypting messages for secure communication
+
+---
+
+Feel free to modify the `CLIENTS_COUNT` and experiment with new features! 🚀
+
