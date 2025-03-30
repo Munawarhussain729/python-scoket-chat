@@ -1,17 +1,20 @@
-# Python-scoket-chat
-A chat system for linix lovers. Where you can run your own server internall and communicate among group of friends. Currently it is limited to 5 clients but you can update value of "CLIENT_COUNT" according to your requirment. 
+# Python-Socket-Chat
 
+A chat system for Linux lovers. You can run your own server internally and communicate with a group of friends. Currently, it is limited to 5 clients, but you can update the value of `CLIENT_COUNT` according to your requirement.
 
 ## General Overview
-It contain 2 program one server and the other one is client. 
-- First we run the server and then we run client program that will try to connect to the server using the defined port 9999 using TCP connection. 
-- As soon as client get connected to server it will display a connection message and ask client for it's name that name will be used to identify the client message.
-- After providing the name client will be free to communicate with server and other clients connected to server.
-- Whenever any client send a message to server it is broastcasted to all other clients. And similarly when server send a message it is also broad casted to all other clients.
+This project contains two programs: one for the **server** and one for the **client**.
 
-## Libraries
-- socket - To use sockets for connections
-- threading - To beind each client with a separate thread
+- First, run the **server** program, which will start listening for incoming connections on port `9999` using a TCP connection.
+- Then, run the **client** program, which will try to connect to the server on the specified port.
+- Once a client successfully connects, it will receive a confirmation message and be prompted to enter a **username**. This username will be used to identify the client in the chat.
+- After providing the username, the client is free to communicate with the server and all other connected clients.
+- Whenever a client sends a message, it is **broadcasted** to all other clients. Similarly, when the server sends a message, it is also broadcasted to all clients.
 
-## Server
-- 
+## Libraries Used
+- `socket` - To establish and manage socket connections.
+- `threading` - To handle multiple clients concurrently by assigning each client a separate thread.
+
+## Server Implementation
+
+
