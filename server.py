@@ -9,7 +9,7 @@ CLIENTS_COUNT = 5
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server_socket.bind("localhost", 9999)
+server_socket.bind(("localhost", 9999))
 server_socket.listen(CLIENTS_COUNT)
 print("🟢 Server Started.... Waiting fro users to join.")
 
@@ -17,7 +17,7 @@ clients = {} #Dictionary to track clients
 shutdown_flag = threading.Event()
 
 def broadcast(message, sender_scoket=None):
-    for client in clients.keys():
+    for client in list(clients.keys()):
         if client != sender_scoket:
             try:
                 client.send(message.encode())
@@ -29,7 +29,7 @@ def broadcast(message, sender_scoket=None):
 def handleClient(client):
     try:
         username = client.recv(BUFFER_SIZE).decode()
-        client[client] = username
+        clients[client] = username
         print(f"🟢 {username} has joined the chat.")
         broadcast(f"🔔 {username} has joined the chat!", client)
         
@@ -39,6 +39,7 @@ def handleClient(client):
                 print(f"🛑 {username} has left the chat.")
                 broadcast(f"🔔 {username} has left the chat.", client)
                 break
+            
             print(f"{username}: {message}")
             broadcast(f"{username}: {message}", client)
     except ConnectionResetError:
@@ -52,11 +53,10 @@ def handleClient(client):
 def accept_clients():
     while not shutdown_flag.is_set():
         try:
-            client,address = server_socket.accept
-            threading.Thread(target=handleClient, args=(client, address),daemon=True).start()
+            client,address = server_socket.accept()
+            threading.Thread(target=handleClient, args=(client, ),daemon=True).start()
         except:
             break
-    
 
 accept_thread = threading.Thread(target=accept_clients, daemon=True) #Daemon thread
 accept_thread.start()
